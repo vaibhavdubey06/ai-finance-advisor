@@ -1,0 +1,99 @@
+Title: Financial Modeling: Definition and Uses
+URL: https://www.investopedia.com/terms/f/financialmodeling.asp
+==================================================
+
+Table of Contents
+Expand
+Table of Contents
+What Is Financial Modeling?
+How It Works
+Example
+Explain Like I'm Five
+FAQs
+The Bottom Line
+Financial Modeling: Definition and Uses
+By
+Carol M. Kopp
+Full Bio
+Carol M. Kopp edits features on a wide range of subjects for Investopedia, including investing, personal finance, retirement planning, taxes, business management, and career development.
+Learn about our
+editorial policies
+Updated May 20, 2025
+Reviewed by
+Michael J Boyle
+Reviewed by
+Michael J Boyle
+Full Bio
+Michael Boyle is an experienced financial professional with more than 10 years working with financial planning, derivatives, equities, fixed income, project management, and analytics.
+Learn about our
+Financial Review Board
+Fact checked by
+Suzanne Kvilhaug
+Fact checked by
+Suzanne Kvilhaug
+Full Bio
+Suzanne is a content marketer, writer, and fact-checker. She holds a Bachelor of Science in Finance degree from Bridgewater State University and helps develop content strategies.
+Learn about our
+editorial policies
+Definition
+Financial modeling involves analyzing a company's past financial performance to predict its future results.
+What Is Financial Modeling?
+Financial modeling is the process of creating a summary of a company's expenses and earnings in the form of a spreadsheet that can be used to calculate the impact of a future event or decision.
+A financial model has many uses for company executives. Financial analysts most often use it to analyze and anticipate how a company's
+stock
+performance might be affected by future events or executive decisions.
+Key Takeaways
+Financial modeling is a numerical representation of some or all aspects of a company's operations.
+Financial models are used to estimate the valuation of a business or to compare companies to their industry competitors.
+Various models exist that may produce different results. A model is only as good as the inputs and assumptions that go into it.
+Investopedia / Michela Buttignol
+How Financial Modeling Works
+Financial modeling is a representation in numbers of a company's operations in the past, present, and forecasted future.
+These models are intended to be used as decision-making tools. Company executives might use them to estimate the costs and project the profits of a proposed new project. Financial analysts use them to explain or anticipate the impact of events on a company's stock, from internal factors such as a change of strategy or business model to external factors such as a change in economic policy or regulation.
+Financial models are used to estimate the
+valuation
+of a business or to compare businesses to their competitors. They are also used in strategic planning to test various scenarios, calculate the cost of new projects, decide on budgets, and allocate corporate resources.
+Examples of financial models may include discounted cash flow analysis,
+sensitivity analysis
+, or in-depth appraisal.
+Fast Fact
+One of the most frequently used models is the
+discounted cash flow model
+, which uses estimates of future cash flows to project the future value of an investment.
+Example of Financial Modeling
+The best financial models provide users with a set of basic assumptions. For example, one commonly
+forecasted
+line item is sales growth. Sales growth is recorded as the increase (or decrease) in gross sales in the most recent quarter compared to the previous quarter. These are the only two inputs a financial model needs to calculate sales growth.
+The financial modeler creates one cell for the prior year's sales, cell A, and one cell for the current year's sales, cell B. The third cell, cell C, is used for a formula that divides the difference between cells A and B by cell A. This is the growth formula. Cell C, the formula, is hard-coded into the model. Cells A and B are input cells that can be changed by the user.
+In this case, the purpose of the model is to estimate sales growth if a certain action is taken or a possible event occurs.
+Of course, this is just one example of financial modeling. Ultimately, a stock analyst is interested in potential growth. Any factor that affects or might affect that growth can be modeled.
+Also, comparisons among companies are important in concluding a
+stock
+purchase. Multiple models help an investor decide among various competitors in an industry.
+Explain Like I'm Five
+Financial modeling is using the past to predict the future. Businesses use financial models to make decisions. A business might create a financial model to raise money, grow the business, or make a budget.
+What Information Should Be Included in a Financial Model?
+To create a useful model that's easy to understand, you should include sections on assumptions and drivers, an income statement, a balance sheet, a cash flow statement, supporting schedules, valuations, sensitivity analysis, charts, and graphs.
+What Types of Businesses Use Financial Modeling?
+Professionals in a variety of businesses rely on financial modeling. Here are just a few examples:
+Bankers use it in sales and trading
+, equity research, and commercial and investment banking. Public accountants use it for due diligence and valuations. Institutions apply financial models in private equity, portfolio management, and research.
+How Is a Financial Model Validated?
+Errors in financial modeling can cause expensive mistakes. For this reason, a financial model may be sent to an outside party to validate the information it contains. Banks and other financial institutions, project promoters, corporations seeking funds, equity houses, and others may request model validation to reassure the end-user that the calculations and assumptions within the model are correct and that the results produced by the model are reliable.
+The Bottom Line
+Financial modeling is a set of numerical techniques used to forecast a company's future growth. Based on the information in a company's income statement, balance sheet, and estimates of future economic conditions, analysts can create sophisticated projections of an investment's future performance.
+Article Sources
+Investopedia requires writers to use primary sources to support their work. These include white papers, government data, original reporting, and interviews with industry experts. We also reference original research from other reputable publishers where appropriate. You can learn more about the standards we follow in producing accurate, unbiased content in our
+editorial policy.
+PWC. "
+Financial Modeling Services
+."
+Read more
+Business
+Corporate Finance
+Financial Analysis
+Partner Links
+Open a New Bank Account
+Advertiser Disclosure
+×
+The offers that appear in this table are from partnerships from which Investopedia receives compensation. This compensation may impact how and where listings appear. Investopedia does not include all offers available in the marketplace.

@@ -1,0 +1,154 @@
+Title: Financial Analysis: Definition, Importance, Types, and Examples
+URL: https://www.investopedia.com/terms/f/financial-analysis.asp
+Scraped: 2025-07-31 21:45:05
+==================================================
+
+Definition
+Financial analysis evaluates a business’s financial health and performance by reviewing its financial data. It helps management run the business better and outside investors decide whether the company is worth buying into.
+What Is Financial Analysis?
+Financial analysis works with a company’s financials to determine its health, performance, and potential. This data, which comes from
+financial statements
+and other reports, is used by investors and companies to make strategic decisions.
+For outsiders, that could be deciding whether to buy shares in the company. For management, it could mean establishing how to run the business better and set goals.
+Key Takeaways
+Financial analysis involves examining a company’s financial data to understand its health, performance, and potential and improve decision making.
+Ratios are a key part of financial analysis, and past data is used to make projections.
+Financial analysis helps management to run companies better and outside investors to determine whether a company makes a good investment.
+Common types of financial analysis include vertical and horizontal analysis, leverage analysis, liquidity analysis, and profitability analysis.
+Nez Riaz / Investopedia
+How Financial Analysis Works
+A company’s success is measured by its financials. Their accounts and statements contain a lot of information represented in figures. Financial analysis aims to turn these numbers into actionable intelligence.
+Ratios
+are generally preferred over looking at individual numbers. Relationships between different pieces of financial data are explored by dividing one figure on a financial statement by another. The results can then be compared against the company’s historical performance or
+other companies
+.
+Financial analysis also tries to be forward-thinking, which involves extrapolating from the data for projections.
+Who Uses Financial Analysis?
+Other than company leaders, many
+stakeholders
+—investors, investment analysts, lenders, and auditors—have an interest in financially analyzing a firm.
+Investors and Analysts
+Investors and analysts assess a company’s financials to determine if investing in it or lending money to it is worthwhile. They undertake
+ratio analysis
+, examining
+liquidity
+,
+cash flow
+,
+leverage
+, and
+profitability
+to see if the company is healthy and well-run compared with its past performance or peer firms. Analysts and investors will also want to know if the company is being fairly
+valued
+—an important fact not just for the stock market but also for auditors, unions, regulators, and private equity firms.
+Company Management
+Accountants and others within a company analyze financial data to improve business decision making. Analyzing financials can help identify weaknesses before they turn into a crisis and is used to set budgets, ensure the right amount of inventory is ordered, assess the
+return on investment
+on specific strategies, and calculate a fair price to pay for an asset or acquisition.
+Below is a summary of these and other stakeholders who use financial analysis.
+Types of Financial Analysis
+Here are some of the most common types of financial analysis:
+Vertical Analysis
+Vertical analysis
+compares each line item on a financial statement as a percentage of a base figure within the same statement. Revenue usually serves as the base figure (100%) on the income statement, while total assets, total liabilities, and equity serve as the base on the balance sheet.
+For example, if a company has $10 million in revenue and $2 million in operating expenses, vertical analysis would show operating expenses as 20% of revenue. This makes it easier to spot when costs are consuming too much revenue compared with the company’s historical performance or the industry standard. For instance, if the industry average for
+gross margin
+is 60% of revenue but a company’s gross margin is only 45% of revenue, this could indicate pricing problems or inefficient operations that need attention.
+Thus, the real power of vertical analysis comes from comparisons:
+Over time
+: A company can see if expenses are taking up a growing part of revenue.
+Across companies
+: Businesses of different sizes can be compared fairly since everything is converted to percentages.
+Against industry
+benchmarks
+: Companies can spot if their cost structures deviate from industry norms.
+Horizontal Analysis
+Horizontal analysis
+(also called trend analysis) tracks how financial items change over time by comparing multiple periods of financial data. It shows both dollar and percentage changes, helping identify growth patterns, cyclical trends, and potential problems.
+For example, let’s say a company’s
+revenue
+figures are as follows:
+2021: $1 million (base year)
+2022: $1.2 million (20% increase from base)
+2023: $1.5 million (50% increase from base)
+2024: $1.4 million (40% increase from base)
+This analysis would reveal not just growth from the base year but also the drop in 2024. When applied across all financial statements, horizontal analysis can uncover significant trends such as:
+Revenue growing faster than costs (a positive sign)
+Operating expenses
+rising faster than revenue (a warning sign)
+Accounts receivable
+growing quicker than sales (potential collection problems)
+Inventory
+growth outpacing sales (possible overstocking issues)
+Most importantly, horizontal analysis can identify unusual changes that deserve investigation. A sudden spike in expenses, an unexpected drop in gross margin, or unusual growth in certain liabilities could all signal issues requiring management’s attention.
+Leverage Analysis
+Companies borrow money (or use leverage) to finance operations and their expansion. Using leverage to their advantage is important, but it’s also crucial that companies don’t overextend themselves.
+Just looking at the amount of
+debt
+isn’t enough. To get a more complete picture, you need to compare borrowing to revenue, growth, and so forth.
+Thus, analysts turn to tools like the
+debt-to-equity ratio
+, which reveals how much the company relies on debt to finance its operations, and the
+debt-to-EBITDA (earnings before interest, taxes, depreciation, and amortization) ratio
+, which indicates how much income the company has available to cover its debt and other
+liabilities
+.
+Liquidity Analysis
+Liquidity analysis assesses a company’s ability to pay off its short-term bills and debts. Tools used to analyze liquidity include the acid test, or
+quick ratio
+, which
+measures a company’s capacity to meet its short-term obligations payable within one year with its most liquid assets such as cash,
+marketable securities
+, and money owed from customers.
+Profitability Analysis
+Companies are mainly judged on how big a profit they generate, and profitability analysis measures how well they’re doing at that.
+Common profitability analysis tools include
+return on invested capital
+,
+which tells us how well a
+company invests its money, and various forms of
+profit margins
+, which essentially calculate how many cents per dollar a company receives from a sale.
+Efficiency Analysis
+One of the keys to running a business successfully is getting the best possible output from the smallest number of
+inputs
+. Efficiency analysis evaluates how well an organization utilizes its resources.
+Popular efficiency analysis tools include the
+inventory turnover ratio
+, which measures how well inventory levels are managed, and the
+asset turnover ratio
+, which calculates how efficiently a company uses the resources at its disposal to generate revenue.
+Cash Flow Analysis
+Cash flow, the movement of money into and out of a company, is crucial to a business. It’s harder to manipulate than profit. It is used to pay dividends and expenses and fund expansions, and is perhaps the best indicator that a company has a sustainable business model.
+Ways to assess a company’s cash flow include
+free cash flow
+, which shows the amount of money left after paying for operating expenses and capital expenditures;
+operating cash flow
+, which is cash generated by a business’s regular operating activities; and the current liability
+coverage ratio
+, which assesses a company’s ability to cover its current liabilities with the cash flow from its operations.
+Below is a summary of these and other types of financial analysis, along with the main ratios and methods used for them:
+Examples of Financial Analysis
+Here are two examples of financial analysis being put to use.
+Internal Review
+Management at a retail company notices that cash flow is dwindling and asks internal accountants to investigate what the possible causes could be. After scouring the accounts, one thing in particular stands out: Accounts receivable, which represents money owed to a company by its customers, has been rising substantially.
+The accountants look at the
+accounts receivable turnover ratio
+and
+days sales outstanding
+to determine the company’s efficiency at collecting payments from customers. This analysis reveals not only that payments must be collected sooner but also that credit criteria need to be tightened to prevent defaults and ensure the company has enough cash on hand to fund its day-to-day operations.
+Choosing a Stock to Invest in
+Let’s say you’re bullish about the potential for growth in
+companies that produce weight-loss drugs
+. You compile a list of the most prominent firms in this area and screen them to determine the best stock to choose from.
+You start with the
+price-to-earnings ratio
+, which tells you how much investors are willing to pay for $1 of earnings in a company. Then you might look at the
+enterprise value (EV)-to-revenue multiple
+and the
+EV-to-EBITDA (earnings before interest, taxes, depreciation, and amortization) multiple
+. The lower the ratios, the better. (These ratios are found for most stocks on major financial websites, including Investopedia.)
+Finally, you can look at each company’s return on invested capital to gauge which firm has historically done a better job investing its money. Comparing these valuations, you then make a short list of companies whose stock you will buy.
+The Bottom Line
+A lot of information is contained within a company’s financials. Analyzing it can help uncover activity that was not immediately apparent and can improve decision making. With the help of ratios, companies can identify problems, trends, and prospects and maximize efficiency.
+Investors, meanwhile, can see how a company stacks up against its past performance and peer group and quickly get an idea of its health, profitability, and the attractiveness of its share price.
