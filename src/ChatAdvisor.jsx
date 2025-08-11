@@ -669,6 +669,55 @@ const ChatAdvisor = () => {
   const [lastError, setLastError] = useState(null);
   const [mode, setMode] = useState('basic'); // 'basic' or 'deep'
   const [monthlyData, setMonthlyData] = useState([]);
+  const [detailedProfile, setDetailedProfile] = useState(null); // Add detailed profile state
+  const [backendStatus, setBackendStatus] = useState({ basic: true, deep: null }); // Track backend status
+
+  // Check backend status
+  const checkBackendStatus = async () => {
+    console.log('Checking backend status...');
+    
+    try {
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      
+      const response = await fetch('/api/health', {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
+      console.log('Health check response:', response.status, response.ok);
+      
+      if (response.ok) {
+        setBackendStatus(prev => ({ ...prev, basic: true }));
+        
+        // Check deep analysis backend
+        try {
+          const deepController = new AbortController();
+          const deepTimeoutId = setTimeout(() => deepController.abort(), 10000); // 10 second timeout for deep analysis
+          
+          const deepResponse = await fetch('/api/advisor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: 'health check' }),
+            signal: deepController.signal
+          });
+          clearTimeout(deepTimeoutId);
+          
+          console.log('Deep analysis check response:', deepResponse.status, deepResponse.ok);
+          setBackendStatus(prev => ({ ...prev, deep: deepResponse.ok }));
+        } catch (deepError) {
+          console.error('Deep analysis check failed:', deepError);
+          setBackendStatus(prev => ({ ...prev, deep: false }));
+        }
+      } else {
+        setBackendStatus(prev => ({ ...prev, basic: false }));
+      }
+    } catch (error) {
+      console.error('Backend status check failed:', error);
+      setBackendStatus(prev => ({ ...prev, basic: false, deep: false }));
+    }
+  };
   const [monthlyLoading, setMonthlyLoading] = useState(true);
 
   useEffect(() => {
@@ -742,7 +791,32 @@ const ChatAdvisor = () => {
         setMonthlyLoading(false);
       }
     };
+
+    // Fetch detailed financial profile
+    const fetchDetailedProfile = async () => {
+      try {
+        const detailedProfileRef = doc(db, 'detailedFinancialProfiles', user.uid);
+        const detailedProfileSnap = await getDoc(detailedProfileRef);
+        if (detailedProfileSnap.exists()) {
+          setDetailedProfile(detailedProfileSnap.data());
+          console.log('Detailed financial profile loaded');
+        } else {
+          console.log('No detailed financial profile found');
+          setDetailedProfile(null);
+        }
+      } catch (error) {
+        console.error('Error fetching detailed profile:', error);
+        if (error.code === 'permission-denied') {
+          console.warn('Permission denied accessing detailed financial profile. Please check Firebase security rules.');
+          // Still set to null, but don't show error to user as this is expected for new users
+        }
+        setDetailedProfile(null);
+      }
+    };
+
     fetchMonthlyData();
+    fetchDetailedProfile();
+    checkBackendStatus();
   }, [user]);
 
   // Auto-scroll to latest message
@@ -876,7 +950,7 @@ const ChatAdvisor = () => {
     setQuestion('');
 
     // Save user message to Firestore and local chat
-    const userMsg = { sender: 'user', message: userQuestion, timestamp: new Date() };
+    const userMsg = { sender: 'user', content: userQuestion, timestamp: new Date() };
     setChatHistory(prev => [...prev, userMsg]);
     await saveMessage({ ...userMsg, timestamp: serverTimestamp() });
 
@@ -887,28 +961,102 @@ const ChatAdvisor = () => {
     ]);
 
     try {
-      // Call new advisor endpoint
-      const response = await fetch('/api/advisor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: userQuestion })
-      });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      // Use toolResult as the AI's response
-      const aiMsg = {
-        role: 'assistant',
-        content: data.toolResult?.result || JSON.stringify(data.toolResult) || 'No response',
-        timestamp: new Date(),
-        structuredData: data.toolResult?.structuredData || null
-      };
-      setMessages(prev => [...prev, aiMsg]);
-      // Save advisor message to Firestore
-      const advisorMsg = { sender: 'advisor', message: aiMsg.content, timestamp: new Date(), structuredData: aiMsg.structuredData };
-      setChatHistory(prev => [...prev, advisorMsg]);
-      await saveMessage({ ...advisorMsg, timestamp: serverTimestamp() });
+      let response;
+      let data;
+      
+      if (mode === 'basic') {
+        // Call basic chat endpoint (direct LLM)
+        response = await fetch('/api/chat/basic', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: userQuestion,
+            userProfile: profile,
+            transactions: transactions,
+            holdings: holdings,
+            monthlyData: monthlyData,
+            detailedProfile: detailedProfile // Include detailed profile
+          })
+        });        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        data = await response.json();
+        console.log('Basic chat response:', data);
+        console.log('Response field:', data.response);
+        console.log('Mode:', mode);
+        
+        // Handle basic chat response
+        const aiMsg = {
+          role: 'assistant',
+          content: data.response || data.result || data.message || 'No response',
+          timestamp: new Date(),
+          structuredData: null // Basic chat doesn't return structured data
+        };
+        
+        console.log('AI Message created:', aiMsg);
+        setMessages(prev => {
+          console.log('Previous messages:', prev);
+          const newMessages = [...prev, aiMsg];
+          console.log('New messages array:', newMessages);
+          return newMessages;
+        });
+        
+        // Save advisor message to Firestore
+        const advisorMsg = { sender: 'advisor', content: aiMsg.content, timestamp: new Date() };
+        setChatHistory(prev => [...prev, advisorMsg]);
+        await saveMessage({ ...advisorMsg, timestamp: serverTimestamp() });
+        
+      } else {
+        // Call existing multi-agent endpoint (deep analysis) with user financial data
+        response = await fetch('/api/advisor', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            prompt: userQuestion,
+            userProfile: profile,
+            transactions,
+            holdings,
+            monthlyData,
+            detailedProfile
+          })
+        });
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        data = await response.json();
+        console.log('Deep analysis response:', data);
+        
+        // Handle multi-agent response (existing logic)
+        const aiMsg = {
+          role: 'assistant',
+          content: data.toolResult?.result || JSON.stringify(data.toolResult) || 'No response',
+          timestamp: new Date(),
+          structuredData: data.toolResult?.structuredData || null
+        };
+        
+        setMessages(prev => [...prev, aiMsg]);
+        
+        // Save advisor message to Firestore
+        const advisorMsg = { sender: 'advisor', content: aiMsg.content, timestamp: new Date(), structuredData: aiMsg.structuredData };
+        setChatHistory(prev => [...prev, advisorMsg]);
+        await saveMessage({ ...advisorMsg, timestamp: serverTimestamp() });
+      }
+      
     } catch (err) {
-      setError('Failed to get response from advisor.');
+      console.error('Chat error:', err);
+      
+      // Handle specific error responses
+      if (err.message && err.message.includes('503')) {
+        // Deep analysis backend is down
+        setError('Deep Analysis service is temporarily unavailable. Please try Basic Chat mode instead.');
+        setLastError('Deep Analysis service is temporarily unavailable. Please try Basic Chat mode for quick financial advice.');
+      } else if (mode === 'deep' && (err.message.includes('ECONNREFUSED') || err.message.includes('fetch failed'))) {
+        // Connection error to Python backend
+        setError('Deep Analysis backend is not running. Please use Basic Chat mode.');
+        setLastError('Deep Analysis backend is not running. Please switch to Basic Chat mode for immediate financial advice.');
+      } else {
+        // Generic error
+        setError(`Failed to get response from ${mode} advisor.`);
+        setLastError(`Failed to get response from ${mode} advisor. Please try again.`);
+      }
+      
       setShowToast(true);
     } finally {
       setLoading(false);
@@ -948,19 +1096,102 @@ const ChatAdvisor = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
-      {/* Mode selection UI */}
-      <div style={{ marginBottom: 16 }}>
-        <label htmlFor="chat-mode-select" style={{ fontWeight: 'bold', marginRight: 8 }}>Chat Mode:</label>
-        <select
-          id="chat-mode-select"
-          value={mode}
-          onChange={e => setMode(e.target.value)}
-          style={{ padding: 4, borderRadius: 4 }}
-        >
-          <option value="basic">Basic Chat</option>
-          <option value="deep">Deep Financial Analysis</option>
-        </select>
+      {/* Enhanced Mode selection UI */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-3">Chat Mode</h3>
+        <div className="flex gap-4 relative">
+          <button
+            onClick={() => setMode('basic')}
+            className={`flex-1 p-3 rounded-lg font-medium transition-all ${
+              mode === 'basic' 
+                ? 'bg-blue-500 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <div className="text-lg mb-1">💬</div>
+            <div>Basic Chat</div>
+            <div className="text-xs opacity-75 mt-1">Quick answers using your financial data</div>
+            <div className="text-xs text-green-600 mt-1">✅ Available</div>
+          </button>
+          <button
+            onClick={() => setMode('deep')}
+            className={`flex-1 p-3 rounded-lg font-medium transition-all ${
+              mode === 'deep' 
+                ? 'bg-purple-500 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <div className="text-lg mb-1">🧠</div>
+            <div>Deep Analysis</div>
+            <div className="text-xs opacity-75 mt-1">Comprehensive multi-agent analysis</div>
+            <div className={`text-xs mt-1 flex items-center justify-center ${
+              backendStatus.deep === true ? 'text-green-600' : 
+              backendStatus.deep === false ? 'text-red-600' : 
+              'text-yellow-600'
+            }`}>
+              <span>
+                {backendStatus.deep === true ? '✅ Available' : 
+                 backendStatus.deep === false ? '❌ Backend Unavailable' : 
+                 '⏳ Checking...'}
+              </span>
+            </div>
+          </button>
+          {/* Refresh button outside the mode button */}
+          {backendStatus.deep !== true && (
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                checkBackendStatus();
+              }}
+              className="absolute top-2 right-2 text-xs bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 z-10"
+              title="Refresh backend status"
+            >
+              🔄
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Notice about detailed financial profile */}
+      {!detailedProfile && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-start gap-3">
+            <div className="text-blue-500 text-lg">💡</div>
+            <div>
+              <h3 className="font-semibold text-blue-800 mb-2">Get More Accurate Advice</h3>
+              <p className="text-blue-700 text-sm mb-3">
+                For comprehensive financial advice like home buying recommendations, complete your detailed financial profile. 
+                This helps our AI provide specific, personalized guidance based on your credit score, debts, assets, and financial goals.
+              </p>
+              <a 
+                href="/financial-profile" 
+                className="inline-block bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+              >
+                Complete Financial Profile
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Backend Status Message */}
+      {backendStatus.deep === false && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+          <div className="flex items-start gap-3">
+            <div className="text-yellow-500 text-lg">⚠️</div>
+            <div>
+              <h3 className="font-semibold text-yellow-800 mb-2">Deep Analysis Temporarily Unavailable</h3>
+              <p className="text-yellow-700 text-sm mb-3">
+                The multi-agent backend service is not running. You can still use <strong>Basic Chat</strong> for personalized financial advice.
+              </p>
+              <p className="text-yellow-700 text-sm">
+                <strong>For developers:</strong> Start the Python backend with: <code className="bg-yellow-100 px-2 py-1 rounded">cd langgraph_backend && python -m uvicorn main:app --reload</code>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">

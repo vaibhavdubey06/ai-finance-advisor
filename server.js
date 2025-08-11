@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import basicChatRouter from './routes/basicChat.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -14,21 +15,43 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+// Basic chat endpoint - direct LLM integration
+app.use('/api/chat/basic', basicChatRouter);
+
 // Financial advisor endpoint - connects to Python LangGraph backend
 app.post('/api/advisor', async (req, res) => {
-  const { prompt } = req.body;
+  const { prompt, userProfile, transactions, holdings, monthlyData, detailedProfile } = req.body;
   if (!prompt) {
     return res.status(400).json({ error: 'Prompt is required' });
   }
   
   try {
     console.log(`[Advisor] User prompt: ${prompt}`);
+    console.log('[Advisor] User data received:', {
+      hasProfile: !!userProfile,
+      hasDetailedProfile: !!detailedProfile,
+      transactionCount: transactions?.length || 0,
+      holdingsCount: holdings?.length || 0,
+      monthlyDataCount: monthlyData?.length || 0
+    });
     
-    // Call Python LangGraph backend
+    // Prepare comprehensive user context for deep analysis
+    const userContext = {
+      userProfile,
+      transactions,
+      holdings,
+      monthlyData,
+      detailedProfile
+    };
+    
+    // Call Python LangGraph backend with user context
     const response = await fetch('http://localhost:8000/financial-advice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: prompt })
+      body: JSON.stringify({ 
+        question: prompt,
+        userContext: userContext
+      })
     });
     
     if (!response.ok) {
@@ -38,26 +61,35 @@ app.post('/api/advisor', async (req, res) => {
     const data = await response.json();
     console.log('[Advisor] Python backend response:', data);
     
-    // Extract the final result from the LangGraph workflow
-    // Priority: tool_use first (RAG responses), then planner (simple responses)
-    const result = data.final?.tool_use?.response ||
-                   data.final?.tool_use?.result ||
-                   data.final?.planner?.response ||
-                   data.final?.planner?.result ||
-                   data.final?.response ||
-                   data.final?.result ||
-                   data.response ||
-                   data.result ||
-                   'No response from AI agents';
+    // Extract the final result from the LangGraph workflow - Python backend now handles proper formatting
+    const data_final = data.final || {};
+    const tool_use = data_final.tool_use || {};
+    
+    // Get the AI-generated response directly from the Python backend
+    const result = tool_use.response || tool_use.result || 
+                   data_final.planner?.response || data_final.planner?.result || 
+                   data.response || data.result ||
+                   'I apologize, but I could not generate a response at this time. Please try again.';
     
     res.json({ 
       success: true, 
-      toolResult: { result },
+      toolResult: { result: result },
       timestamp: new Date().toISOString() 
     });
     
   } catch (error) {
     console.error('[Advisor] Error:', error);
+    
+    // Check if it's a connection error to the Python backend
+    if (error.code === 'ECONNREFUSED' || error.message.includes('fetch failed')) {
+      return res.status(503).json({ 
+        error: 'Deep Analysis service is temporarily unavailable. Please try Basic Chat mode or restart the Python backend.',
+        details: 'Python LangGraph backend is not running on port 8000',
+        suggestion: 'Use Basic Chat mode for quick financial advice',
+        timestamp: new Date().toISOString()
+      });
+    }
+    
     res.status(500).json({ 
       error: `Failed to get financial advice: ${error.message}`,
       timestamp: new Date().toISOString()

@@ -1,6 +1,7 @@
 import React from 'react';
 import ChatAdvisor from './ChatAdvisor';
 import Dashboard from './Dashboard';
+import FinancialProfileDetailed from './FinancialProfileDetailed';
 import { AuthProvider, useAuth } from './AuthProvider';
 import LandingPage from './LandingPage';
 import './App.css';
@@ -28,6 +29,15 @@ function MainApp() {
             </div>
          
           </div>
+        ) : (
+          <Navigate to="/" state={{ from: location }} replace />
+        )}
+      />
+      {/* Financial Profile (protected) */}
+      <Route
+        path="/financial-profile"
+        element={user ? (
+          <FinancialProfileDetailed />
         ) : (
           <Navigate to="/" state={{ from: location }} replace />
         )}

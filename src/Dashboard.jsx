@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { db, auth } from './firebase';
 import { doc, getDoc, updateDoc, collection, getDocs, setDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 import Charts from './Charts';
 import StatementUpload from './StatementUpload';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -461,6 +462,15 @@ const Dashboard = () => {
                   {tab.label}
                 </button>
               ))}
+              
+              {/* Financial Profile Link */}
+              <Link
+                to="/financial-profile"
+                className="w-full text-left px-4 py-3 rounded-md font-semibold text-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 text-gray-200 hover:bg-gray-700 hover:text-teal-200 block"
+                onClick={() => setIsOpen(false)}
+              >
+                💼 Detailed Financial Profile
+              </Link>
             </div>
           </nav>
         </>
