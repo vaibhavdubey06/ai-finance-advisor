@@ -222,7 +222,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ##  **Support**
 
 For questions and support:
--  Email: your.email@example.com
+-  Email: dubeyvaibhav272@gmail.com
 -  Issues: [GitHub Issues](https://github.com/vaibhavdubey06/ai-finance-advisor/issues)
 -  Discussions: [GitHub Discussions](https://github.com/vaibhavdubey06/ai-finance-advisor/discussions)
 
