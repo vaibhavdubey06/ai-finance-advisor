@@ -13,8 +13,9 @@ router.post('/', async (req, res) => {
             });
         }
 
+        // Security: Log only request metadata, not user data
         console.log('Basic chat request received:', {
-            message: message.substring(0, 100) + '...',
+            hasMessage: !!message,
             hasProfile: !!userProfile,
             hasDetailedProfile: !!detailedProfile,
             transactionCount: transactions?.length || 0,

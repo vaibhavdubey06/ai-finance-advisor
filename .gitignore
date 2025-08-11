@@ -3,17 +3,38 @@
 # ===================================
 
 # -----------------
-# Environment & Secrets
+# Environment & Secrets - CRITICAL SECURITY
 # -----------------
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+!.env.production.example
 *.key
 *.pem
 secrets/
 config/local.js
+serviceAccountKey.json
+firebase-service-account.json
+firebase-adminsdk-*.json
+
+# API Keys and Security
+api-keys.txt
+credentials.json
+auth-config.json
+service-account-*.json
+
+# -----------------
+# Security Documentation (Keep in repo but exclude sensitive versions)
+# -----------------
+# Keep security guides and checklists
+!SECURITY_*.md
+!API_KEY_*.md
+!DEPLOYMENT_*.md
+
+# Exclude any files with actual keys/credentials
+*-with-keys.md
+*-credentials.md
+*-secrets.md
 
 # -----------------
 # Node.js
@@ -147,12 +168,58 @@ ehthumbs.db
 Thumbs.db
 
 # -----------------
-# Package Managers
+# Package Managers & Lock Files
 # -----------------
+# Keep package.json but exclude lock files to avoid conflicts
 package-lock.json
 yarn.lock
 poetry.lock
 Pipfile.lock
+
+# -----------------
+# Development & Testing Files
+# -----------------
+# Test files and coverage
+coverage/
+.nyc_output
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+test-results/
+.test-env
+
+# Development utilities
+.vscode/settings.json
+.vscode/launch.json
+debug.log
+*.debug
+
+# -----------------
+# Backup & Temporary Files
+# -----------------
+# Backup files
+*.backup
+*.bak
+*.orig
+server_secure.js  # Our temporary security file
+*_backup.*
+*_old.*
+
+# -----------------
+# Production & Deployment
+# -----------------
+# Deployment configs with actual values
+docker-compose.prod.yml
+kubernetes-secrets.yml
+.deployment-config
+production-*.json
+
+# SSL certificates
+*.crt
+*.cer
+*.p12
+*.pfx
 
 # -----------------
 # Runtime

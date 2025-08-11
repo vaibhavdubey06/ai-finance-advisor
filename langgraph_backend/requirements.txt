@@ -6,4 +6,6 @@ google-generativeai
 fastapi
 uvicorn
 pydantic
-tiktoken 
+tiktoken
+python-dotenv
+firebase-admin 

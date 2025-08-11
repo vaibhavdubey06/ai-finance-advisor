@@ -979,8 +979,9 @@ const ChatAdvisor = () => {
           })
         });        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         data = await response.json();
-        console.log('Basic chat response:', data);
-        console.log('Response field:', data.response);
+        // Security: Log only non-sensitive response metadata
+        console.log('Basic chat response received');
+        console.log('Response type:', typeof data.response);
         console.log('Mode:', mode);
         
         // Handle basic chat response
@@ -1021,7 +1022,8 @@ const ChatAdvisor = () => {
         
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         data = await response.json();
-        console.log('Deep analysis response:', data);
+        // Security: Log only processing status, not user data
+        console.log('Deep analysis response received');
         
         // Handle multi-agent response (existing logic)
         const aiMsg = {
@@ -1320,7 +1322,7 @@ const ChatAdvisor = () => {
                     {/* Structured output for advisor messages */}
                     {isAdvisor && msg.structuredData && !loading && (
                       <>
-                        {console.log('StructuredData for advisor:', msg.structuredData)}
+                        {/* Security: Removed sensitive data logging */}
                         <StructuredOutput data={cleanStructuredData(msg.structuredData)} />
                       </>
                     )}

@@ -11,8 +11,8 @@ from langchain.docstore.document import Document
 import google.generativeai as genai
 import numpy as np
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from root .env file
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
 
 # Example: Load documents from a local file (can be replaced with any loader)
 def load_documents():
