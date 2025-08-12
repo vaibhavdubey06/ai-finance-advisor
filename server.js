@@ -24,8 +24,9 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',  // Vite dev server
     'http://localhost:3000',  // Alternative dev port
-    // Add your production domain here when deploying
-    // 'https://yourdomain.com'
+    'https://ai-finance-advisor-oatv.vercel.app', // Your Vercel deployment
+    /\.vercel\.app$/,  // Allow all Vercel deployments
+    /\.onrender\.com$/ // Allow Render services
   ],
   credentials: true,
   optionsSuccessStatus: 200

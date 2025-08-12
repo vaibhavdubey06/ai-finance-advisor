@@ -74,11 +74,12 @@ app.add_middleware(
         "http://localhost:5173",  # Vite dev server
         "http://localhost:3000",  # Alternative dev port
         "http://localhost:8080",  # Node.js server
-        # Add your production domain here when deploying
-        # "https://yourdomain.com"
+        "https://ai-finance-advisor-oatv.vercel.app",  # Your Vercel deployment
+        "https://*.vercel.app",  # All Vercel deployments
+        "https://*.onrender.com"  # All Render services
     ],
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"],
 )
 
