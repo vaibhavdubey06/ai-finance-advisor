@@ -1,4 +1,6 @@
-﻿#  AI Finance Advisor
+﻿# 🚀 AI Finance Advisor
+
+> **Status**: ✅ **DEPLOYED TO PRODUCTION** - Ready for use!
 
 An intelligent financial advisor application powered by **LangGraph multi-agent architecture** with **RAG (Retrieval-Augmented Generation)** capabilities. Get personalized financial advice backed by real-time data and comprehensive financial knowledge.
 
