@@ -1,0 +1,80 @@
+{
+  "name": "ai-finance-advisor",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI-powered financial advisor with multi-agent architecture and RAG capabilities",
+  "keywords": [
+    "finance",
+    "ai",
+    "langgraph",
+    "rag",
+    "advisor",
+    "react",
+    "fastapi"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaibhavdubey06/ai-finance-advisor.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:prod": "cross-env NODE_ENV=production vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "preview:prod": "vite preview --host 0.0.0.0",
+    "start": "node server.js",
+    "start:prod": "cross-env NODE_ENV=production node server.js",
+    "python:install": "cd langgraph_backend && pip install -r requirements.txt",
+    "python:start": "cd langgraph_backend && python main.py",
+    "python:start:prod": "cd langgraph_backend && python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+    "python:test": "cd langgraph_backend && python -m pytest",
+    "dev:full": "concurrently \"npm run dev\" \"npm run start\" \"npm run python:start\"",
+    "test:integration": "node test_integration.js",
+    "setup": "npm install && npm run python:install",
+    "docs:serve": "cd langgraph_backend && python -c \"import uvicorn; uvicorn.run('main:app', host='localhost', port=8000, reload=True)\"",
+    "ingest:docs": "cd langgraph_backend && python tools/ingest_docs.py",
+    "deploy:check": "npm run build:prod && npm run lint",
+    "deploy:preview": "npm run build:prod && npm run preview:prod"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@heroicons/react": "^2.1.5",
+    "@react-three/drei": "^10.6.1",
+    "@react-three/fiber": "^9.3.0",
+    "axios": "^1.7.7",
+    "firebase": "^10.14.1",
+    "framer-motion": "^11.11.17",
+    "lucide-react": "^0.539.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.28.0",
+    "recharts": "^2.13.3",
+    "three": "^0.179.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.0",
+    "cross-env": "^10.0.0",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "express": "^4.21.1",
+    "globals": "^15.11.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "python": ">=3.9.0"
+  }
+}

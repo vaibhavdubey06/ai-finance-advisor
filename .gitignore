@@ -153,6 +153,7 @@ data/processed/
 data/raw/
 *.csv
 *.json
+!package.json
 *.xlsx
 !data/articles/*.txt
 
