@@ -23,6 +23,15 @@ credentials.json
 auth-config.json
 service-account-*.json
 
+# Deployment guides with sensitive data (API keys, credentials)
+*DEPLOYMENT_READY*
+*DEPLOYMENT_GUIDE*
+*DEPLOY_CHECKLIST*
+*BUILD_FIX*
+*COMMIT_SUCCESS*
+deployment-with-keys.*
+*-with-keys.*
+
 # -----------------
 # Security Documentation (Keep in repo but exclude sensitive versions)
 # -----------------
