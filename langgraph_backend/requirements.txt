@@ -10,4 +10,4 @@ tiktoken
 python-dotenv
 firebase-admin
 slowapi
-numpy 
+numpy
