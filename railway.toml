@@ -1,0 +1,12 @@
+[build]
+builder = "nixpacks"
+buildCommand = "cd langgraph_backend && pip install -r requirements.txt"
+
+[deploy]
+startCommand = "cd langgraph_backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[env]
+PORT = 8000
+ENVIRONMENT = "production"

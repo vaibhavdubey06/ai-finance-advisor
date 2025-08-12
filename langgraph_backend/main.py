@@ -11,13 +11,29 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
-# Load environment variables from root .env file
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
+# Load environment variables - check for production env first
+if os.path.exists('.env.production'):
+    load_dotenv('.env.production')
+elif os.path.exists(os.path.join(os.path.dirname(__file__), '..', '.env')):
+    load_dotenv(dotenv_path=os.path.join(
+        os.path.dirname(__file__), '..', '.env'
+    ))
+else:
+    load_dotenv()  # Load from current directory
+
+# Get environment settings
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+PORT = int(os.getenv("PORT") or 8000)
 
 # Initialize rate limiter
 limiter = Limiter(key_func=get_remote_address)
 
-app = FastAPI(title="AI Finance Advisor API", version="1.0.0")
+app = FastAPI(
+    title="AI Finance Advisor API",
+    version="1.0.0",
+    docs_url="/docs" if ENVIRONMENT != "production" else None,
+    redoc_url="/redoc" if ENVIRONMENT != "production" else None
+)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -25,6 +41,18 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 class Query(BaseModel):
     question: str
     userContext: Optional[Dict[str, Any]] = None
+
+
+# Health check endpoint for deployment monitoring
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for monitoring services"""
+    return {
+        "status": "healthy",
+        "environment": ENVIRONMENT,
+        "version": "1.0.0"
+    }
+
 
 # Security: Add request validation
 async def validate_request(query: Query):
@@ -85,8 +113,8 @@ async def financial_advice(
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "langgraph_backend.main:app", 
-        host="0.0.0.0", 
-        port=8000, 
-        reload=True
+        "langgraph_backend.main:app",
+        host="0.0.0.0",
+        port=PORT,
+        reload=ENVIRONMENT != "production"
     )
