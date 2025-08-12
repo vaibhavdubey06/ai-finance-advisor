@@ -1,11 +1,10 @@
 langgraph
 langchain
-openai
-moonshot-ai
 google-generativeai
 fastapi
 uvicorn
 pydantic
 tiktoken
 python-dotenv
-firebase-admin 
+firebase-admin
+slowapi 
