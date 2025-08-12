@@ -46,6 +46,7 @@
     "@react-three/drei": "^10.6.1",
     "@react-three/fiber": "^9.3.0",
     "axios": "^1.7.7",
+    "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "cross-env": "^10.0.0",
     "express": "^4.21.1",
@@ -60,6 +61,7 @@
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.28.0",
     "recharts": "^2.13.3",
+    "tailwind-merge": "^2.3.0",
     "three": "^0.179.1"
   },
   "devDependencies": {
