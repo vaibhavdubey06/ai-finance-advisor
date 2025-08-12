@@ -1,7 +1,5 @@
 langgraph
 langchain
-openai
-moonshot-ai
 google-generativeai
 fastapi
 uvicorn
