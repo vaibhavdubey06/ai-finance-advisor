@@ -69,7 +69,8 @@ app.post('/api/advisor', async (req, res) => {
     };
     
     // Call Python LangGraph backend with user context
-    const response = await fetch('http://localhost:8000/financial-advice', {
+    const pythonApiUrl = process.env.PYTHON_API_URL || 'https://ai-finance-advisor-python.onrender.com';
+    const response = await fetch(`${pythonApiUrl}/financial-advice`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
