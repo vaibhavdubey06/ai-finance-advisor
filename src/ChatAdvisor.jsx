@@ -681,7 +681,8 @@ const ChatAdvisor = () => {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
       
-      const response = await fetch('/api/health', {
+      const nodeApiUrl = import.meta.env.VITE_NODE_API_URL || '';
+      const response = await fetch(`${nodeApiUrl}/api/health`, {
         signal: controller.signal
       });
       clearTimeout(timeoutId);
@@ -696,7 +697,7 @@ const ChatAdvisor = () => {
           const deepController = new AbortController();
           const deepTimeoutId = setTimeout(() => deepController.abort(), 10000); // 10 second timeout for deep analysis
           
-          const deepResponse = await fetch('/api/advisor', {
+          const deepResponse = await fetch(`${nodeApiUrl}/api/advisor`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: 'health check' }),
@@ -966,7 +967,8 @@ const ChatAdvisor = () => {
       
       if (mode === 'basic') {
         // Call basic chat endpoint (direct LLM)
-        response = await fetch('/api/chat/basic', {
+        const nodeApiUrl = import.meta.env.VITE_NODE_API_URL || '';
+        response = await fetch(`${nodeApiUrl}/api/chat/basic`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1007,7 +1009,8 @@ const ChatAdvisor = () => {
         
       } else {
         // Call existing multi-agent endpoint (deep analysis) with user financial data
-        response = await fetch('/api/advisor', {
+        const nodeApiUrl = import.meta.env.VITE_NODE_API_URL || '';
+        response = await fetch(`${nodeApiUrl}/api/advisor`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
